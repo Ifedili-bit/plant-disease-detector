@@ -82,16 +82,3 @@ Classes: Healthy, Powdery, Rust
 
 🤝 Contributing
 Feel free to submit issues, fork the repository, and create pull requests for improvements.
-
-📄 License
-MIT License - feel free to use this project!
-
-text
-
-4. **Paste** the copied text into the editor
-
-5. **Scroll down** and click the green **"Commit changes"** button
-
-6. **Leave the commit message** as default or add a short message like "Updated README with project details"
-
-Your README will instantly update with a professional, well-formatted layout that shows off your amazing 96.67% accuracy project! 🎉
