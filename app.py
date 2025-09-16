@@ -1,5 +1,3 @@
-# Create the complete Streamlit app Python file
-app_code = '''
 import streamlit as st
 import tensorflow as tf
 import numpy as np
@@ -29,12 +27,6 @@ st.markdown("""
         border-left: 5px solid #2E8B57;
         margin: 1rem 0;
     }
-    .confidence-bar {
-        background-color: #2E8B57;
-        height: 20px;
-        border-radius: 10px;
-        margin: 5px 0;
-    }
     .healthy { color: #2E8B57; font-weight: bold; }
     .powdery { color: #FF6B35; font-weight: bold; }
     .rust { color: #8B4513; font-weight: bold; }
@@ -45,22 +37,18 @@ st.markdown("""
 @st.cache_resource
 def load_model():
     try:
-        model = tf.keras.models.load_model('plant_disease_model.keras')
+        model = tf.keras.models.load_model('plant_disease_model.h5')
         return model
-    except:
-        try:
-            model = tf.keras.models.load_model('plant_disease_model.h5')
-            return model
-        except Exception as e:
-            st.error(f"Error loading model: {e}")
-            return None
+    except Exception as e:
+        st.error(f"Error loading model: {e}")
+        return None
 
 # Preprocess the image
 def preprocess_image(image):
     image = image.resize((224, 224))  # Resize to match model input
     image_array = np.array(image)
     # Convert RGBA to RGB if needed
-    if image_array.shape[-1] == 4:
+    if len(image_array.shape) == 3 and image_array.shape[-1] == 4:
         image_array = image_array[..., :3]
     image_array = image_array / 255.0  # Normalize
     image_array = np.expand_dims(image_array, axis=0)  # Add batch dimension
@@ -83,7 +71,7 @@ def main():
         model = load_model()
     
     if model is None:
-        st.error("Failed to load the model. Please check if the model files exist.")
+        st.error("Failed to load the model. Please check if the model file exists.")
         st.stop()
     
     # File uploader
@@ -164,14 +152,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-'''
-
-# Write the app code to a file
-with open('app.py', 'w') as f:
-    f.write(app_code)
-
-print("✅ Streamlit app file 'app.py' created successfully!")
-print("📁 Files in current directory:")
-for file in os.listdir('/kaggle/working'):
-    if file.endswith('.py') or 'plant_disease' in file:
-        print(f"✓ {file}")
